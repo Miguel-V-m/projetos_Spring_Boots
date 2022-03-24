@@ -1,13 +1,11 @@
 package edu.mjv.school.projetofinal.model;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -25,9 +23,6 @@ public class Musica {
 	@JoinColumn(name ="id_artista")
 	private Artista artista;
 	
-	@ManyToMany(mappedBy="musicas")
-	private List<Playlist> playlist;
-		
 	public double getDuracao() {
 		return duracao;
 	}
@@ -46,6 +41,13 @@ public class Musica {
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	public Artista getArtista() {
+		return artista;
+	}
+	public void setArtista(Artista artista) {
+		this.artista = artista;
 	}
 	@Override
 	public String toString() {

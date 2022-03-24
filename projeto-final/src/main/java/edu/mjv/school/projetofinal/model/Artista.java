@@ -2,7 +2,6 @@ package edu.mjv.school.projetofinal.model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,9 +18,7 @@ public class Artista {
 	
 	private String nome; 
 		
-	@OneToMany(mappedBy = "artista")
-	private List<Musica> musicas;
-	
+		
     public String getNome() {
 		return nome;
 	}
@@ -35,22 +32,12 @@ public class Artista {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getArtista() {
-		return nome;
-	}
-	public void setArtista(String artista) {
-		this.nome = artista;
-	}
+		
 	@Override
 	public String toString() {
 		return "Artista [id=" + id + ", artista=" + nome + "]";
 	}
-	public List<Musica> getMusicas() {
-		return musicas;
-	}
-	public void setMusicas(List<Musica> musicas) {
-		this.musicas = musicas;
-	}
+	
 	
 
 }
