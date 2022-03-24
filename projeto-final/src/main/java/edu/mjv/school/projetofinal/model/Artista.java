@@ -22,7 +22,7 @@ public class Artista {
 	@OneToMany(mappedBy = "artista")
 	private List<Musica> musicas;
 	
-public String getNome() {
+    public String getNome() {
 		return nome;
 	}
 	public void setNome(String nome) {
