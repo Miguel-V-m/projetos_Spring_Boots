@@ -2,6 +2,8 @@ package edu.mjv.school.projetofinal.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,15 +15,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.mjv.school.projetofinal.model.Musica;
+import edu.mjv.school.projetofinal.repository.MusicaRepository;
 
 
 @RestController
 @RequestMapping("/musica")
 public class MusicaController {
+	
+	@Autowired
+	private MusicaRepository musicaRepository;
+	
 	@PostMapping()
-	public void gravar(@RequestBody Musica musica) {
-		System.out.println("gravando registro");
-		System.out.println("musicas");
+	public ResponseEntity<Musica> inserirMusica(@RequestBody Musica musica) {
+		
+		if(musica!=null) {
+			musicaRepository.save(musica);
+			return ResponseEntity.ok(musica);
+		}
+		return ResponseEntity.badRequest().build();
 	}
 	
 	@PutMapping()
@@ -32,20 +43,18 @@ public class MusicaController {
 	
     @DeleteMapping(value = "/{id}")
     public void excluir(@PathVariable("id") Integer id) {
-    	System.out.println("excluindo registros");
-    	System.out.println("Id:" + id);
+    	musicaRepository.deleteById(id);
 	}
     
-    @GetMapping("/filtro")
-    public List<Musica> filtar(@RequestParam("nm") String nome){
-    	System.out.println("Listando cadastros pelo nome" + nome);
-    	return null;
-    }
+//    @GetMapping("/filtro")
+//    public List<Musica> filtar(@RequestParam("nm") String nome){
+//    	musicaRepository.
+//    }
     
     @GetMapping()
     public List<Musica> listarTodos() {
-    	System.out.println("listando todos");    	
-    	return null;
+    	List<Musica> musicas = musicaRepository.listarTodos();
+    	return musicas;
 	}
 
 }
