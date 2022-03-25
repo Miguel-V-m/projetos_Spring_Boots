@@ -37,12 +37,12 @@ public class ArtistaControler {
 		repository.save(artista);
 	}
 	// pode ser listar pode nome
-//	@GetMapping("/filtrarPorNome")
-//	public List<Artista> buscarPorNome(@RequestParam("nome") String nome) {
-//		System.out.println("Listando artistas pelo nome: " + nome);
-//		List<Artista> artistaEncontrados = repository.buscarMusicasPorArtista(nome);
-//		return artistaEncontrados;
-//	}
+	@GetMapping("/filtrarPorNome")
+	public List<Artista> buscarPorNome(@RequestParam("nome") String nome) {
+		System.out.println("Listando artistas pelo nome: " + nome);
+		List<Artista> artistaEncontrados = repository.findByNome(nome);
+		return artistaEncontrados;
+	}
 	
 	@GetMapping("/listarTodos")
 	public List<Artista> listarTodo() {

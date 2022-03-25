@@ -11,19 +11,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestParam; 
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.mjv.school.projetofinal.model.Musica;
 import edu.mjv.school.projetofinal.repository.MusicaRepository;
-
 
 @RestController
 @RequestMapping("/musica")
 public class MusicaController {
 	
 	@Autowired
-	 private MusicaRepository repository;
+	private MusicaRepository repository;
 	@PostMapping()
 	public void gravar(@RequestBody Musica musica) {
 		System.out.println("Gravando Registro");
@@ -34,27 +33,32 @@ public class MusicaController {
 	public void alterar(@RequestBody Musica musica) {
 		System.out.println("Alterando Registro");
 		System.out.println(musica);
-	}
-	@DeleteMapping(value = "/{id}")
-	public void excluir(@PathVariable ("id")Integer id) {
-		System.out.println("Excluindo Registro");
-		System.out.println("Id:" + id);
+		repository.save(musica);
 	}
 	
-	@GetMapping("/filtro")
-	public List<Musica> filtrar (@RequestParam("nm")String nome) {
-		System.out.println("Listando musicas pelo nome " + nome);
-		return null;
+	@GetMapping("/filtrarPorNome")
+	public List<Musica> buscarPorNome(@RequestParam("nome") String nome) {
+		System.out.println("Listando artistas pelo nome: " + nome);
+		List<Musica> artistaEncontrados = repository.findByNome(nome);
+		return artistaEncontrados;
 	}
+	
 	@GetMapping()
-	public List<Musica> listar() {
-	System.out.println("Listando dados");
-		return null;
+	public List<Musica> listarTodas(){
+		List<Musica> todasAsMusicas  = repository.findAll();
+		for(Musica musica:todasAsMusicas) {
+			System.out.println("ID: " + musica.getId());
+		}
+		return todasAsMusicas;
 	}
-	@GetMapping(value = "/{id}")
-	public void buscar(@PathVariable("id") Integer id) {
-		System.out.println("Buscando registro");
-		System.out.println("Id:" + id);
+	
+	@DeleteMapping(value = "/{id}")
+	public void excluir(@PathVariable ("id") Integer id) {
+		Musica musicaDeletada = repository.findById(id).orElse(null);
+		System.out.println("Excluindo consulta");
+		repository.delete(musicaDeletada);
 	}
-
+	
+	
+	
 }
