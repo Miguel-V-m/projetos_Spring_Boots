@@ -35,14 +35,21 @@ public class ArtistaControler {
 		System.out.println(artista);
 	}
 	@DeleteMapping(value = "/{id}")
-	public void excluir(@PathVariable ("id")Integer id) {
-		System.out.println("Excluindo Registro");
-		System.out.println("Id:" + id);
+	public void excluir(@PathVariable ("id") Integer id) {
+		Artista artistaDeletada = repository.findById(id).orElse(null);
+		System.out.println("Excluindo consulta");
+		repository.delete(artistaDeletada);
 	}
+
 	@GetMapping("/filtro")
 	public List<Artista> filtrar (@RequestParam("nm")String nome) {
 		System.out.println("Listando musicas pelo nome " + nome);
 		return null;
+	}
+	@GetMapping(value = "/{id}")
+	public void buscar(@PathVariable("id") Integer id) {
+		System.out.println("Buscando registro");
+		System.out.println("Id:" + id);
 	}
 	@GetMapping()
 	public List<Artista> listar() {

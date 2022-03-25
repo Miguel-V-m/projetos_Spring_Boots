@@ -40,6 +40,7 @@ public class MusicaController {
 		System.out.println("Excluindo Registro");
 		System.out.println("Id:" + id);
 	}
+	
 	@GetMapping("/filtro")
 	public List<Musica> filtrar (@RequestParam("nm")String nome) {
 		System.out.println("Listando musicas pelo nome " + nome);
@@ -49,6 +50,11 @@ public class MusicaController {
 	public List<Musica> listar() {
 	System.out.println("Listando dados");
 		return null;
+	}
+	@GetMapping(value = "/{id}")
+	public void buscar(@PathVariable("id") Integer id) {
+		System.out.println("Buscando registro");
+		System.out.println("Id:" + id);
 	}
 
 }
