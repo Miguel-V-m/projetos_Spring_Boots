@@ -22,7 +22,8 @@ import edu.mjv.school.projetofinal.repository.ArtistaRepository;
 public class ArtistaControler {
 	
 	@Autowired
-	 private ArtistaRepository repository;
+	private ArtistaRepository repository;
+	
 	@PostMapping()
 	public void gravar(@RequestBody Artista artista) {
 		System.out.println("Gravando Registro");
@@ -33,28 +34,37 @@ public class ArtistaControler {
 	public void alterar(@RequestBody Artista artista) {
 		System.out.println("Alterando Registro");
 		System.out.println(artista);
+		repository.save(artista);
 	}
+	// pode ser listar pode nome
+//	@GetMapping("/filtrarPorNome")
+//	public List<Artista> buscarPorNome(@RequestParam("nome") String nome) {
+//		System.out.println("Listando artistas pelo nome: " + nome);
+//		List<Artista> artistaEncontrados = repository.buscarMusicasPorArtista(nome);
+//		return artistaEncontrados;
+//	}
+	
+	@GetMapping("/listarTodos")
+	public List<Artista> listarTodo() {
+		List<Artista> todosOsArtistas = repository.findAll();
+		for (Artista artista : todosOsArtistas) {
+			System.out.println("ID: " + artista.getId());
+		}
+		return todosOsArtistas;
+	}
+	
+	@GetMapping(value = "/{id}")
+	public Artista buscarArtistaPorId(@PathVariable("id") Integer id) {
+		Artista artista = repository.findById(id).orElse(null);
+		System.out.println("Buscando artista por Id:" + id);
+		return artista;
+	}
+	
 	@DeleteMapping(value = "/{id}")
 	public void excluir(@PathVariable ("id") Integer id) {
 		Artista artistaDeletada = repository.findById(id).orElse(null);
 		System.out.println("Excluindo consulta");
 		repository.delete(artistaDeletada);
-	}
-
-	@GetMapping("/filtro")
-	public List<Artista> filtrar (@RequestParam("nm")String nome) {
-		System.out.println("Listando musicas pelo nome " + nome);
-		return null;
-	}
-	@GetMapping(value = "/{id}")
-	public void buscar(@PathVariable("id") Integer id) {
-		System.out.println("Buscando registro");
-		System.out.println("Id:" + id);
-	}
-	@GetMapping()
-	public List<Artista> listar() {
-	System.out.println("Listando dados");
-		return null;
 	}
 
 }

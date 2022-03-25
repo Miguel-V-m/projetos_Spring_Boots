@@ -12,8 +12,8 @@ public interface MusicaRepository extends JpaRepository<Musica,Integer>{
 //	@Query("Select m from Musica m")
 //	List<Musica> listarTodos(); 
 	
-//	@Query("Select m from Musica m left join Artista a on m.artista = a.id where a.nome = :nomeDoArtista")
-//	List<Musica> buscarMusicasPorArtista(String nomeDoArtista);   
+	@Query("Select m from Musica m left join Artista a on m.artista = a.id where a.nome = :nomeDoArtista")
+	List<Musica> buscarMusicasPorArtista(String nomeDoArtista);   
 
 }
 
